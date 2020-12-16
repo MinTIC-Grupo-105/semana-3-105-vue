@@ -53,7 +53,24 @@
               class="rounded-circle"
           /></a>
           <h3>{{ user.nombre }}</h3>
-          <em>{{ user.email }}</em>
+          </center>
+          <center>
+
+          <em>{{ user.email }}</em><br />
+
+          <span class="badge badge-warning">HTML5/CSS</span>
+          <span class="badge badge-info">Adobe CS 5.5</span>
+          <span class="badge badge-info">Microsoft Office</span>
+          <span class="badge badge-success">Windows XP, Vista, 7</span>
+        </center>
+        <hr />
+        <center>
+          <p class="text-left">
+            <strong>Bio: </strong><br />
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sem dui,
+            tempor sit amet commodo a, vulputate vel tellus.
+          </p>
+          <br />
         </center>
       </div>
     </div>
