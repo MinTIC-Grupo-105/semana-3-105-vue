@@ -34,6 +34,10 @@
 </template>
 
 <script>
+$(document).ready(function () {
+  $("#loginModal").modal("hide");
+});
+
 export default {
     data(){
         return{

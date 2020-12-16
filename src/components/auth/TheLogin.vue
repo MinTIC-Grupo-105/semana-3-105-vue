@@ -109,7 +109,7 @@ import swal from "sweetalert";
 
 $(document).ready(function () {
   $("#loginModal").modal("show");
-  console.log("Hola");
+  console.log("Activar modal");
 });
 
 export default {
@@ -134,6 +134,7 @@ export default {
         localStorage.setItem("user", JSON.stringify(user));
         if (token) {
           swal("Exito!!!", "Logi correcto!", "success");
+          $("#loginModal").modal("hide");
           this.$router.push("/home");
         }
       } catch {
