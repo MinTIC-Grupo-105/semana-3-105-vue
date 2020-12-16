@@ -1,85 +1,116 @@
 <template>
   <div class="container" mt="5">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col"></div>
-    </div>
-    <main class="login-form">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-header">Ingreso</div>
-              <div class="card-body">
-                <form action="" method="">
-                  <div class="form-group row">
-                    <label
-                      for="email_address"
-                      class="col-md-4 col-form-label text-md-right"
-                      >Direccion de email</label
-                    >
-                    <div class="col-md-6">
-                      <input
-                        id="email_address"
-                        name="email-address"
-                        v-model="login.email"
-                        type="email"
-                        class="form-control"
-                        aria-describedby="emailHelp"
-                        required
-                        autofocus
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label
-                      for="password"
-                      class="col-md-4 col-form-label text-md-right"
-                      >Contraseña</label
-                    >
-                    <div class="col-md-6">
-                      <input
-                        type="password"
-                        id="password"
-                        class="form-control"
-                        name="password"
-                        required
-                        v-model="login.password"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="col-md-6 offset-md-4">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox" name="remember" /> Recordarme
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 offset-md-4">
-                    <button
-                      @click.prevent="loginUser"
-                      type="submit"
-                      class="btn btn-primary"
-                    >
-                      Ingresar
-                    </button>
-                    <a href="#" class="btn btn-link"> Olvido su cntraseña? </a>
-                  </div>
-                </form>
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-title text-center">
+              <h4>Ingreso</h4>
+            </div>
+            <div class="d-flex flex-column text-center">
+              <form>
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Your email address..."
+                    id="email_address"
+                    name="email-address"
+                    v-model="login.email"
+                    aria-describedby="emailHelp"
+                    required
+                    autofocus
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Your password..."
+                    id="password"
+                    name="password"
+                    required
+                    v-model="login.password"
+                  />
+                </div>
+                <button
+                  class="btn btn-info btn-block btn-round"
+                  @click.prevent="loginUser"
+                  type="submit"
+                >
+                  Entrar
+                </button>
+              </form>
+              <div class="text-center text-muted delimiter">
+                o usa una red social
               </div>
+              <div class="d-flex justify-content-center social-buttons">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-round"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Twitter"
+                >
+                  <i class="fab fa-twitter"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-round"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Facebook"
+                >
+                  <i class="fab fa-facebook"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-round"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Linkedin"
+                >
+                  <i class="fab fa-linkedin"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <div class="signup-section">
+              ¿No eres usuario todavía?
+              <a href="#a" class="text-info"> Registrate</a>.
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
 <script>
 import swal from "sweetalert";
+
+$(document).ready(function () {
+  $("#loginModal").modal("show");
+  console.log("Hola");
+});
 
 export default {
   name: "TheLogin",
