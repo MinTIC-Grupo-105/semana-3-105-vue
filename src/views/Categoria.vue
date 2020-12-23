@@ -1,11 +1,10 @@
 <template>
-<data-table></data-table>
+  <data-table-categoria></data-table-categoria>
 </template>
 
 <script>
-import DataTable from '../components/DataTable.vue'
+import DataTableCategoria from "../components/DataTableCategoria.vue";
 export default {
-  components: { DataTable },
-    
-}
+  components: { DataTableCategoria },
+};
 </script>

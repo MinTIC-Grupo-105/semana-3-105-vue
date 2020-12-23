@@ -9,7 +9,7 @@ const routes = [
     path: '/',
     name: 'Login',
     component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue'),
-    
+
   },
   {
     path: '/home',
@@ -18,11 +18,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-    meta:{
+    meta: {
       requiresAuth: true
     }
-    
-  },  
+
+  },
   {
     path: '/categoria',
     name: 'Categoria',
@@ -30,10 +30,31 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "categoria" */ '../views/Categoria.vue'),
-    meta:{
+    meta: {
       requiresAuth: false
     }
-    
+  },
+  {
+    path: '/articulo',
+    name: 'Articulo',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "articulo" */ '../views/Articulo.vue'),
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/usuario',
+    name: 'Usuario',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "usuario" */ '../views/Usuario.vue'),
+    meta: {
+      requiresAuth: false
+    }
   },
 ]
 
@@ -43,16 +64,16 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) =>{
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if(localStorage.getItem('jwt') === null){
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('jwt') === null) {
       next({
         path: '/'
       })
-    }else{
+    } else {
       next();
     }
-  }else{
+  } else {
     next();
   }
 
