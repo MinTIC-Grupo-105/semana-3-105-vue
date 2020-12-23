@@ -1,9 +1,9 @@
-<template>
+<template> 
   <div class="" mt="5">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <img src="bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src=" bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         Marketing Digital
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
