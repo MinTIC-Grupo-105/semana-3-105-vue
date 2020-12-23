@@ -95,9 +95,6 @@
         </template>
       </v-data-table>
     </v-app>
-    <pre>
-      {{ $data.categorias }}
-    </pre>
   </div>
 </template>
 

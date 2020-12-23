@@ -3,13 +3,13 @@
     <v-app id="inspire">
       <v-data-table
         :headers="headers"
-        :items="categorias"
+        :items="usuarios"
         sort-by="nombre"
         class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Categorias</v-toolbar-title>
+            <v-toolbar-title>Usuarios</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
@@ -21,7 +21,7 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  Agregar Categoria
+                  Agregar Usuario
                 </v-btn>
               </template>
               <v-card>
@@ -34,18 +34,27 @@
                     <v-row>
                       <v-col cols="12">
                         <v-text-field
-                          v-model="editedItem.nombre"
+                          v-model="editedItem.name"
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-textarea
-                          counter="250"
-                          auto-grow
-                          no-resize
-                          v-model="editedItem.descripcion"
-                          label="Descripcion"
-                        ></v-textarea>
+                        <v-text-field
+                          v-model="editedItem.email"
+                          label="email"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.rol"
+                          label="rol"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.password"
+                          label="contraseña"
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -86,8 +95,6 @@
           <v-icon medium @click="deleteItem(item)">
             <template v-if="item.estado"> mdi-toggle-switch</template>
             <template v-else> mdi-toggle-switch-off-outline</template>
-
-             
           </v-icon>
         </template>
         <template v-slot:no-data>
@@ -95,9 +102,6 @@
         </template>
       </v-data-table>
     </v-app>
-    <pre>
-      {{ $data.categorias }}
-    </pre>
   </div>
 </template>
 
@@ -111,16 +115,18 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       {
-        text: "Categoria",
+        text: "Nombre",
         align: "start",
         sortable: true,
-        value: "nombre",
+        value: "name",
       },
-      { text: "Descripcion", value: "descripcion" },
+      { text: "Email", value: "email" },
+      { text: "Rol", value: "rol" },
       { text: "Estado", value: "estado" },
       { text: "Acciones", value: "actions", sortable: false },
     ],
     desserts: [],
+    usuarios: [],
     categorias: [],
     editedIndex: -1,
     editedItem: {
@@ -168,10 +174,10 @@ export default {
 
     list() {
       axios
-        .get("http://localhost:3000/api/categoria/list")
+        .get("http://localhost:3000/api/usuario/list")
         .then((response) => {
-          this.categorias = response.data;
-          console.log(this.categorias);
+          this.usuarios = response.data;
+          console.log(this.usuarios);
         })
         .catch((error) => {
           console.log(error);
@@ -195,7 +201,7 @@ export default {
       if (this.editedItem.estado == 1) {
         // put
         axios
-          .put("http://localhost:3000/api/categoria/deactivate", {
+          .put("http://localhost:3000/api/usuario/deactivate", {
             id: this.editedItem.id,
           })
           .then((response) => {
@@ -207,7 +213,7 @@ export default {
       } else {
         // post
         axios
-          .put("http://localhost:3000/api/categoria/activate", {
+          .put("http://localhost:3000/api/usuario/activate", {
             id: this.editedItem.id,
           })
           .then((response) => {
@@ -241,10 +247,11 @@ export default {
       if (this.editedIndex > -1) {
         // put
         axios
-          .put("http://localhost:3000/api/categoria/update", {
+          .put("http://localhost:3000/api/usuario/update", {
             id: this.editedItem.id,
-            nombre: this.editedItem.nombre,
-            descripcion: this.editedItem.descripcion,
+            name: this.editedItem.name,
+            email: this.editedItem.email,
+            rol: this.editedItem.rol,
           })
           .then((response) => {
             this.list();
@@ -255,11 +262,11 @@ export default {
       } else {
         // post
         axios
-          .post("http://localhost:3000/api/categoria/add", {
-            id: this.editedItem.id,
+          .post("http://localhost:3000/api/usuario/add", {
             estado: 1,
-            nombre: this.editedItem.nombre,
-            descripcion: this.editedItem.descripcion,
+            name: this.editedItem.name,
+            email: this.editedItem.email,
+            rol: this.editedItem.rol,
           })
           .then((response) => {
             this.list();

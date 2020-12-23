@@ -3,13 +3,13 @@
     <v-app id="inspire">
       <v-data-table
         :headers="headers"
-        :items="categorias"
+        :items="articulos"
         sort-by="nombre"
         class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Categorias</v-toolbar-title>
+            <v-toolbar-title>Articulo</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
@@ -21,7 +21,7 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  Agregar Categoria
+                  Agregar Aticulo
                 </v-btn>
               </template>
               <v-card>
@@ -37,6 +37,17 @@
                           v-model="editedItem.nombre"
                           label="Nombre"
                         ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-select
+                          v-model="categoria"
+                          label="Categoria"
+                          :items="categorias"
+                          item-text="nombre"
+                          item-value="id"
+                          return-object
+                        >
+                        </v-select>
                       </v-col>
                       <v-col cols="12">
                         <v-textarea
@@ -86,8 +97,6 @@
           <v-icon medium @click="deleteItem(item)">
             <template v-if="item.estado"> mdi-toggle-switch</template>
             <template v-else> mdi-toggle-switch-off-outline</template>
-
-             
           </v-icon>
         </template>
         <template v-slot:no-data>
@@ -95,9 +104,6 @@
         </template>
       </v-data-table>
     </v-app>
-    <pre>
-      {{ $data.categorias }}
-    </pre>
   </div>
 </template>
 
@@ -111,7 +117,7 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       {
-        text: "Categoria",
+        text: "Articulo",
         align: "start",
         sortable: true,
         value: "nombre",
@@ -121,6 +127,8 @@ export default {
       { text: "Acciones", value: "actions", sortable: false },
     ],
     desserts: [],
+    articulos: [],
+    categoria: "",
     categorias: [],
     editedIndex: -1,
     editedItem: {
@@ -153,6 +161,7 @@ export default {
   created() {
     this.initialize();
     this.list();
+    this.categoriasList();
   },
 
   methods: {
@@ -168,6 +177,16 @@ export default {
 
     list() {
       axios
+        .get("http://localhost:3000/api/articulo/list")
+        .then((response) => {
+          this.articulos = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    categoriasList() {
+      axios
         .get("http://localhost:3000/api/categoria/list")
         .then((response) => {
           this.categorias = response.data;
@@ -177,7 +196,6 @@ export default {
           console.log(error);
         });
     },
-
     editItem(item) {
       this.editedIndex = item.id;
       this.editedItem = Object.assign({}, item);
@@ -195,7 +213,7 @@ export default {
       if (this.editedItem.estado == 1) {
         // put
         axios
-          .put("http://localhost:3000/api/categoria/deactivate", {
+          .put("http://localhost:3000/api/articulo/deactivate", {
             id: this.editedItem.id,
           })
           .then((response) => {
@@ -207,7 +225,7 @@ export default {
       } else {
         // post
         axios
-          .put("http://localhost:3000/api/categoria/activate", {
+          .put("http://localhost:3000/api/articulo/activate", {
             id: this.editedItem.id,
           })
           .then((response) => {
@@ -241,7 +259,7 @@ export default {
       if (this.editedIndex > -1) {
         // put
         axios
-          .put("http://localhost:3000/api/categoria/update", {
+          .put("http://localhost:3000/api/articulo/update", {
             id: this.editedItem.id,
             nombre: this.editedItem.nombre,
             descripcion: this.editedItem.descripcion,
@@ -255,7 +273,7 @@ export default {
       } else {
         // post
         axios
-          .post("http://localhost:3000/api/categoria/add", {
+          .post("http://localhost:3000/api/articulo/add", {
             id: this.editedItem.id,
             estado: 1,
             nombre: this.editedItem.nombre,
